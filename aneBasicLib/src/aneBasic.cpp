@@ -20,6 +20,7 @@ FREObject createObject( FREContext, void*, uint32_t, FREObject[] );
 FREObject vectorPP( FREContext, void*, uint32_t, FREObject[] );
 FREObject byteArrayPP( FREContext, void*, uint32_t, FREObject[] );
 FREObject writeByteArray( FREContext, void*, uint32_t, FREObject[] );
+FREObject manipulateBitmap( FREContext, void*, uint32_t, FREObject[] );
 
 
 /**
@@ -44,7 +45,8 @@ void contextInitializer(
 		"createObject",
 		"vectorPP",
 		"byteArrayPP",
-		"writeByteArray"
+		"writeByteArray",
+		"manipulateBitmap"
 	};
 
 	FREFunction values[] =
@@ -56,7 +58,8 @@ void contextInitializer(
 		&createObject,
 		&vectorPP,
 		&byteArrayPP,
-		&writeByteArray
+		&writeByteArray,
+		&manipulateBitmap
 	};
 
 	*numFunctionsToSet = sizeof( key ) / sizeof( uint8_t* );
@@ -270,6 +273,38 @@ FREObject writeByteArray( FREContext context, void* functionData, uint32_t argc,
 	FREReleaseByteArray( argv[1] );
 	FREReleaseByteArray( argv[0] );
 
+	return NULL;
+}
+
+
+
+/**
+ * 비트맵 데이터 조작
+ * ByteArray와 똑같이 pointer를 이용해 메모리에 직접 접근이 가능. 속도 짱!!
+ */
+FREObject manipulateBitmap( FREContext context, void* functionData, uint32_t argc, FREObject argv[] )
+{
+	FREBitmapData bmpd;
+	FREAcquireBitmapData( argv[0], &bmpd );
+
+	uint32_t* p = bmpd.bits32;
+	unsigned c0, a, r, g, b, c1;
+
+	for( unsigned i = 0; i < bmpd.width * bmpd.height; ++i )
+	{
+		c0 = *( p + i );
+
+		a = c0 >> 24 & 0xff;
+		r = (unsigned)((float)( c0 >> 16 & 0xff ) * 0.2 );
+		g = (unsigned)((float)( c0 >> 8 & 0xff ) * 0.7 );
+		b = (unsigned)((float)( c0 & 0xff ) * 0.1 );
+
+		c1 = r + g + b;
+
+		*( p + i ) = ( a << 24 ) | ( c1 << 16 ) | ( c1 << 8 ) | c1;
+	}
+
+	FREReleaseBitmapData( argv[0] );
 	return NULL;
 }
 

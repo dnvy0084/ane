@@ -1,6 +1,9 @@
 package
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	import flash.utils.getQualifiedClassName;
@@ -8,12 +11,21 @@ package
 	
 	import labs.dn.ane.ANEBasic;
 	
+	import mx.core.BitmapAsset;
+	
+	[SWF(width="1024", height="768", frameRate="60")]
 	public class UsageANE extends Sprite
 	{
+		[Embed(source="./img/wallpaper.jpg", mimeType="image/jpeg")]
+		private var asset: Class;
+		
 		private var aneBasic:ANEBasic;
 		
 		public function UsageANE()
 		{
+			this.stage.align = StageAlign.TOP_LEFT;
+			this.stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			this.aneBasic = new ANEBasic();
 			
 			trace( "isSupported:", this.aneBasic.isSupported );
@@ -37,8 +49,24 @@ package
 			
 			this.byteArrayPPtest();
 			this.memcopyWithByteArrayTest();
+			this.maipulateImage();
 		}
 		
+		private function maipulateImage():void
+		{
+			var img: BitmapAsset = new asset() as BitmapAsset;
+			
+			var bitmap:Bitmap = new Bitmap( img.bitmapData.clone() );
+			this.addChild( bitmap );
+			
+			var n: int = getTimer();
+			this.aneBasic.manipulateBitmap( img.bitmapData );
+			trace( "maipulateImage:", getTimer() - n );
+			
+			var bitmap2:Bitmap = new Bitmap( img.bitmapData );
+			bitmap2.x = this.stage.stageWidth >> 1;
+			this.addChild( bitmap2 );
+		}		
 		
 		/**
 		 * Native Code에서 FREObject같은 플래시 객체를 여러개 만들 경우 심각한 성능 저하가 있음. 

@@ -1,5 +1,6 @@
 package labs.dn.ane
 {
+	import flash.display.BitmapData;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.external.ExtensionContext;
@@ -119,6 +120,12 @@ package labs.dn.ane
 		public function writeByteArray( readBytesWithShort: ByteArray, writeBytesWithInt: ByteArray ): void
 		{
 			this.extContext.call( "writeByteArray", readBytesWithShort, writeBytesWithInt );
+		}
+		
+		
+		public function manipulateBitmap( bmpd: BitmapData ): void
+		{
+			this.extContext.call( "manipulateBitmap", bmpd );
 		}
 		
 		/**

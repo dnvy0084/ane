@@ -47,7 +47,7 @@ extern "C"{
  * 초기화 함수,
  *  FlashRuntimeExtensions.h에 정의된 FREInitializer 형태로 정의되어야 합니다.
  */
-__declspec( dllexport ) void kinectUtilInit( void **extData, FREContextInitializer* ctxInitializer, FREContextFinalizer* ctxFinalizer );
+__declspec( dllexport ) void initializer( void **extData, FREContextInitializer* ctxInitializer, FREContextFinalizer* ctxFinalizer );
 
 
 
@@ -65,7 +65,7 @@ __declspec( dllexport ) void kinectUtilInit( void **extData, FREContextInitializ
  * 종료 함수.
  *  같은 형태로 FREFinalizer 형태로 정의
  */
-__declspec( dllexport ) void kinectUtilFin( void* extData );
+__declspec( dllexport ) void finalizer( void* extData );
 
 
 #ifdef __cplusplus

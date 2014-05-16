@@ -2,7 +2,7 @@
  * aneBasic.h
  *
  *  Created on: 2014. 5. 15.
- *      Author: Naver
+ *      Author: kim.jinhoon
  */
 
 #ifndef ANEBASIC_H_

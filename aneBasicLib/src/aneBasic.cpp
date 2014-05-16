@@ -2,7 +2,7 @@
  * aneBasic.cpp
  *
  *  Created on: 2014. 5. 15.
- *      Author: Naver
+ *      Author: kim.jinhoon
  */
 
 #include <stdlib.h>

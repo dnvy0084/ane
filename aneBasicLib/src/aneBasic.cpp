@@ -221,6 +221,12 @@ FREObject createObject( FREContext context, void* functionData, uint32_t argc, F
 }
 
 
+/**
+ * ByteArray를 받아 각 값에 +1해서 반환
+ * FREByteArray 구조체를 이용해 매개변수의 ByteArray를 Acquire하는게 포인트
+ * AcquireByteArray는 C pointer를 이용해 ByteArray가 사용중인 메모리 영역에 직접 접근 할 수 있도록 해줌.
+ * read, write 둘다 가능.
+ */
 FREObject byteArrayPP( FREContext context, void* functionData, uint32_t argc, FREObject argv[] )
 {
 	FREByteArray bytes;
@@ -241,6 +247,11 @@ FREObject byteArrayPP( FREContext context, void* functionData, uint32_t argc, FR
 }
 
 
+/**
+ * 대용량 데이터를 제어하는 경우 FREObject를 이용해 객체 생성은 성능 저하가 있음
+ * write가 가능한 일정 길이의 byteArray를 flash로 부터 넘겨받아 메모리에 직접 쓰면 C의 성능을 최대한 살릴 수 있음.
+ *
+ */
 FREObject writeByteArray( FREContext context, void* functionData, uint32_t argc, FREObject argv[] )
 {
 	FREByteArray read, write;

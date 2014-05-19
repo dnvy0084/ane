@@ -1,0 +1,1 @@
+adt -package -target ane aneBasic.ane descriptor.xml -swc aneBasicMakeLib.swc -platform Windows-x86 library.swf libaneBasicLib.dll

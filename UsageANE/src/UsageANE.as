@@ -49,10 +49,44 @@ package
 			
 			this.byteArrayPPtest();
 			this.memcopyWithByteArrayTest();
-			this.maipulateImage();
+			this.manipulateImage();
+			this.manipulateInAir();
 		}
 		
-		private function maipulateImage():void
+		private function manipulateInAir():void
+		{
+			var img: BitmapAsset = new asset() as BitmapAsset;
+			var bytes: ByteArray = img.bitmapData.getPixels( img.bitmapData.rect );
+			
+			bytes.position = 0;
+			var c0: int;
+			var c1: int, a: int, r: int, g: int, b: int;
+			
+			var n: int = getTimer();
+			
+			for( ; bytes.bytesAvailable >= 4; )
+			{
+				c0 = bytes.readInt();
+				
+				a = c0 & 0xff000000;
+				r = c0 >> 16 & 0xff;
+				g = c0 >> 8 & 0xff;
+				b = c0 & 0xff;
+				
+				c1 = r * 0.2 + g * 0.7 + b * 0.1;
+				bytes.position -= 4;
+				bytes.writeInt( a | (c1 << 16) | (c1 << 8) | c1 );
+			}
+			
+			bytes.position = 0;
+			img.bitmapData.setPixels( img.bitmapData.rect, bytes );
+			
+			this.addChild( new Bitmap( img.bitmapData ) );
+			
+			trace( "maupilateInAir:", getTimer() - n );
+		}
+		
+		private function manipulateImage():void
 		{
 			var img: BitmapAsset = new asset() as BitmapAsset;
 			

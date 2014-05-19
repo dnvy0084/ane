@@ -294,14 +294,14 @@ FREObject manipulateBitmap( FREContext context, void* functionData, uint32_t arg
 	{
 		c0 = *( p + i );
 
-		a = c0 >> 24 & 0xff;
+		a = c0 & 0xff000000;
 		r = (unsigned)((float)( c0 >> 16 & 0xff ) * 0.2 );
 		g = (unsigned)((float)( c0 >> 8 & 0xff ) * 0.7 );
 		b = (unsigned)((float)( c0 & 0xff ) * 0.1 );
 
 		c1 = r + g + b;
 
-		*( p + i ) = ( a << 24 ) | ( c1 << 16 ) | ( c1 << 8 ) | c1;
+		*( p + i ) = a | ( c1 << 16 ) | ( c1 << 8 ) | c1;
 	}
 
 	FREReleaseBitmapData( argv[0] );

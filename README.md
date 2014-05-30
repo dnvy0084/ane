@@ -16,7 +16,7 @@ aneBasicMakeLib: ane파일을 만들기 위한 flex library project - 여기서 
 UsageANE: 만들어진 ane를 import하고 사용하는 예제 프로젝트
 
 
-ane 파일 만드는 방법
+- ane 파일 만드는 방법
 
-- flex sdk 폴더 내 bin 폴더 adt.bat를 이용해 compile할 수 있다. 
--
+1. flex sdk 폴더 내 bin 폴더 adt.bat를 이용해 compile 합니다.(윈도우 환경변수에 bin폴더 경로를 잡아주면 편해요.)
+2. command line prompt를 통해 adt -package -target ane {ouput ane file name} {descriptor xml file name} -swc {gateway swc file name} -platform Windows-x86 library.swf {dll file name} 명령으로 ane파일을 compile할 수 있습니다. 

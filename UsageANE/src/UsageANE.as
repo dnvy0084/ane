@@ -50,7 +50,7 @@ package
 			this.byteArrayPPtest();
 			this.memcopyWithByteArrayTest();
 			this.manipulateImage();
-			this.manipulateInAir();
+			//this.manipulateInAir(); //같은 이미지에 대해 13배 정도 성능 차이가 있음. 
 		}
 		
 		private function manipulateInAir():void
@@ -78,12 +78,14 @@ package
 				bytes.writeInt( a | (c1 << 16) | (c1 << 8) | c1 );
 			}
 			
+			
 			bytes.position = 0;
 			img.bitmapData.setPixels( img.bitmapData.rect, bytes );
 			
+			trace( "maupilateInAir:", getTimer() - n );
+			
 			this.addChild( new Bitmap( img.bitmapData ) );
 			
-			trace( "maupilateInAir:", getTimer() - n );
 		}
 		
 		private function manipulateImage():void
@@ -142,7 +144,7 @@ package
 			var bytes:ByteArray = this.getByteArray( 10 );
 			
 			this.aneBasic.byteArrayPP( bytes );
-			this.printBytes( bytes );
+			this.printBytes( bytes, "ByteArray read and write Test" );
 			
 			if( !performanceTest ) return;
 			
